@@ -115,7 +115,7 @@ const JobApplicationForm = () => {
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="input-field w-full p-4 bg-gray-100 text-[#15307c] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#15307c] transition duration-200"
+                            className="input-field w-full p-4 bg-white text-[#15307c] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#15307c] transition duration-200"
                         />
                         {errors.name && <p className="text-red-500 text-sm mt-2">{errors.name}</p>}
                     </div>

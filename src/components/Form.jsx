@@ -1,4 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+"use client";
+
+import { useRef, useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 
 const Form = () => {
@@ -10,6 +12,9 @@ const Form = () => {
     subject: "",
     message: "",
   });
+
+  const theme = "black";
+  const logo = theme === "black" ? "logo-white.png" : "logo-black.png";
 
   useEffect(() => {
     const allFieldsFilled = Object.values(formValues).every(
@@ -55,24 +60,28 @@ const Form = () => {
   };
 
   return (
-    <>
-      <form ref={form} onSubmit={sendEmail}>
-        <section className="flex flex-col-reverse gap-12 py-12 md:p-20 md:flex-row items-center bg-white ">
-          <div
-            data-aos="fade-right"
-            className="flex flex-col justify-center items-center gap-[1.5rem] w-[40%] -mt-12"
-          >
-            <img src="images/logo.png" alt="LOGO" className="h-48 w-48" />
-          </div>
+    <div className="bg-white py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-5xl font-bold text-gray-900 mb-6">Contact Us</h2>
+          <p className="text-3xl font-medium text-gray-800 max-w-3xl mx-auto">
+            Let's work together to grow your business
+          </p>
+        </div>
 
-          <div className="w-[60%]" data-aos="fade-up">
-            <div className="flex flex-wrap gap-4">
-              <div className="w-full flex gap-4 lg:flex-nowrap flex-wrap">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8">
+          <div className="w-full lg:w-2/3">
+            <form
+              ref={form}
+              onSubmit={sendEmail}
+              className="bg-black rounded-lg p-8"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <input
                   type="text"
                   placeholder="Name"
                   name="user_name"
-                  className="w-full lg:w-[47.5%] py-5 px-4 border-2 text-gray-700 border-gray-300 bg-gray-300 rounded-md"
+                  className="w-full py-4 px-4 rounded-md bg-white text-gray-800"
                   value={formValues.user_name}
                   onChange={handleChange}
                 />
@@ -80,45 +89,57 @@ const Form = () => {
                   type="text"
                   placeholder="Email Address"
                   name="user_email"
-                  className="w-full lg:w-[50%] py-5 px-4 border-2 text-gray-700 border-gray-300 bg-gray-300 rounded-md"
+                  className="w-full py-4 px-4 rounded-md bg-white text-gray-800"
                   value={formValues.user_email}
                   onChange={handleChange}
                 />
               </div>
+
               <input
                 type="text"
                 placeholder="Subject"
                 name="subject"
-                className="w-full py-5 px-4 border-2 text-gray-700 border-gray-300 bg-gray-300 rounded-md"
+                className="w-full py-4 px-4 rounded-md bg-white text-gray-800 mb-4"
                 value={formValues.subject}
                 onChange={handleChange}
               />
+
               <textarea
-                id="textMessage"
                 placeholder="Message"
                 name="message"
-                className="w-full max-w-[40] py-5 px-4 border-2 text-gray-700 border-gray-300 bg-gray-300 rounded-md"
+                className="w-full py-4 px-4 rounded-md bg-white text-gray-800 min-h-[200px] mb-4"
                 value={formValues.message}
                 onChange={handleChange}
               ></textarea>
 
-              <button
-                type="submit"
-                value="Send"
-                className={`px-4 py-4 delay-75 rounded-full text-gray-100 ${
-                  isButtonDisabled
-                    ? "bg-[#6a8dee] cursor-not-allowed"
-                    : "bg-[#15307c] cursor-pointer"
-                }`}
-                disabled={isButtonDisabled}
-              >
-                SEND EMAIL
-              </button>
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  value="Send"
+                  className={`px-8 py-3 rounded-full text-white font-medium ${
+                    isButtonDisabled
+                      ? "bg-blue-400 cursor-not-allowed"
+                      : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                  }`}
+                  disabled={isButtonDisabled}
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className="w-full lg:w-1/3 flex justify-center">
+            <div className="relative w-60 h-80 overflow-hidden group">
+              <div className="absolute inset-0 flex flex-col items-center">
+                <img src={`images/${logo}`} alt="Logo" className="w-60 h-60" />
+                <h1 className="text-3xl text-[#0f1424] font-bold">Elevex Global</h1>
+              </div>
             </div>
           </div>
-        </section>
-      </form>
-    </>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -1,56 +1,6 @@
-// import React from "react";
-// import Navbar from "./Navbar";
-// import { useTypewriter, Cursor } from "react-simple-typewriter";
-// import { Link } from "react-router-dom";
-
-
-// const Header = () => {
-//   const [text] = useTypewriter({
-//     words: [
-//       "TALENT PARTNER",
-//       "BUSINESS PARTNER",
-//       "IT PARTNER",
-//     ],
-//     loop: true,
-//     deleteSpeed: 50,
-//   });
-
-//   return (
-//     <div data-aos="fade-up">
-//       <Navbar />
-//       <div className="h-[30rem] bg-[#15307c] flex flex-col justify-end items-center pb-12 md:pb-28 gap-8">
-//         <h1
-//           data-aos="fade-up"
-//           className="text-5xl delay-100 font-bold flex flex-wrap text-white"
-//         >
-//           YOUR <span>&nbsp;{text}</span>
-//           <Cursor />
-//         </h1>
-//         <Link to="/Services">
-//           <button
-//             data-aos="fade-up"
-//             className="bg-white delay-300 p-4 rounded-full text-[#15307c]"
-//           >
-//             SEE OUR SERVICES
-//           </button>
-//         </Link>
-//       </div>
-//       <svg
-//         className="fill-[#15307c] bg-gray-100"
-//         viewBox="0 0 1440 57"
-//         fill="none"
-//         xmlns="http://www.w3.org/2000/svg"
-//       >
-//         <path d="M1440 0H0V57C720 0 1440 57 1440 57V0Z"></path>
-//       </svg>
-//     </div>
-//   );
-// };
-
-// export default Header;
-import Navbar from "./Navbar"
-import { Link } from "react-router-dom"
-import { Linkedin, Instagram, MessageCircle, Plus } from "lucide-react"
+import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
+import { Linkedin, Instagram, MessageCircle, Plus } from "lucide-react";
 
 const Header = () => {
   return (
@@ -61,7 +11,7 @@ const Header = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div className="space-y-8 z-10">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
-                Best Solutions Design <br />& Development
+                Your Partner in Global<br />Growth.
               </h1>
 
               <div className="flex space-x-3 pt-4">
@@ -118,8 +68,9 @@ const Header = () => {
 
           <div className="text-center mt-16 max-w-3xl mx-auto text-gray-300">
             <p>
-              Empowering new startups with modern user experiences by bridging users' needs and clients' requirements.
-              Our expertise lies in developing innovative and impactful solutions.
+              Empowering new startups with modern user experiences by bridging
+              users' needs and clients' requirements. Our expertise lies in
+              developing innovative and impactful solutions.
             </p>
           </div>
         </div>
@@ -136,8 +87,7 @@ const Header = () => {
         </div> */}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
-
+export default Header;

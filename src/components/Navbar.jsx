@@ -1,193 +1,65 @@
-// import { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
-// import HeaderTopBar from "./HeaderTopBar";
+"use client";
 
-// const Navbar = () => {
-//   const [isNavbarOpen, setNavbarOpen] = useState(false);
-
-//   useEffect(() => {
-//     if (isNavbarOpen) {
-//       document.body.style.overflow = "hidden";
-//     } else {
-//       document.body.style.overflow = "auto";
-//     }
-//   }, [isNavbarOpen]);
-
-//   const toggleNavbar = () => {
-//     setNavbarOpen((prevState) => !prevState);
-//   };
-
-//   const linkClasses =
-//     "block py-2 text-[#15307c] hover:bg-[#15307c] hover:text-white rounded-full px-4 duration-500";
-
-//   return (
-//     <nav className=" mirror  h-18 bg-white border-gray-200 scroll-smooth focus:scroll-auto shadow-lg	 fixed w-full z-30 ">
-//       <div className="hidden sm:block">
-//         <HeaderTopBar />
-//       </div>
-//       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-2">
-//         <span className=" h-16 w-28 p-4 self-center text-2xl font-semibold whitespace-nowrap text-white flex items-center space-x-3 rtl:space-x-reverse">
-//           <Link to="/">
-//             <img src="images/logo.png" alt="logo" />
-//           </Link>
-//         </span>
-//         <button
-//           onClick={toggleNavbar}
-//           type="button"
-//           aria-label="Toggle navigation menu"
-//           className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm  rounded-lg md:hidden text-[#15307c] focus:outline-none focus:ring-2 focus:ring-[#9eafd6] "
-//           aria-controls="navbar-multi-level"
-//           aria-expanded={isNavbarOpen}
-//         >
-//           <span className="sr-only">Open main menu</span>
-//           <svg
-//             className="w-5 h-5"
-//             aria-hidden="true"
-//             xmlns="http://www.w3.org/2000/svg"
-//             fill="none"
-//             viewBox="0 0 17 14"
-//           >
-//             <path
-//               stroke="currentColor"
-//               strokeLinecap="round"
-//               strokeLinejoin="round"
-//               strokeWidth="2"
-//               d="M1 1h15M1 7h15M1 13h15"
-//             />
-//           </svg>
-//         </button>
-//         <div
-//           className={`${
-//             isNavbarOpen ? "block" : "hidden"
-//           } w-full md:block md:w-auto`}
-//           id="navbar-multi-level"
-//         >
-//           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-[#9eafd6] rounded-lg md:flex-row md:mt-0 md:border-0 space-x-3 rtl:space-x-4">
-//             {/* Home */}
-//             <li className="px-3">
-//               <Link to="/" className={linkClasses} aria-current="page">
-//                 Home
-//               </Link>
-//             </li>
-//             {/* about */}
-//             <li>
-//               <Link to="/AboutUs" className={linkClasses}>
-//                 About Us
-//               </Link>
-//             </li>
-//             {/* Services */}
-//             <li>
-//               <Link to="/services">
-//                 <div className="dropdown dropdown-hover w-full">
-//                   <div
-//                     tabIndex={0}
-//                     role="button"
-//                     className="flex gap-2 items-center justify-start py-2 text-[#15307c] hover:bg-[#15307c] hover:text-white rounded-full px-4 duration-500 border-transparent border-0"
-//                   >
-//                     <h3>Services</h3>
-//                     <svg
-//                       className="h-4 mt-1"
-//                       data-slot="icon"
-//                       aria-hidden="true"
-//                       fill="#15307c"
-//                       stroke-width="1.5"
-//                       stroke="currentColor"
-//                       viewBox="0 0 24 24"
-//                       xmlns="http://www.w3.org/2000/svg"
-//                     >
-//                       <path
-//                         d="m19.5 8.25-7.5 7.5-7.5-7.5"
-//                         stroke-linecap="round"
-//                         stroke-linejoin="round"
-//                       ></path>
-//                     </svg>
-//                   </div>
-//                   <ul
-//                     tabIndex={0}
-//                     className="dropdown-content menu rounded-box z-[1] w-52 p-2 bg-white shadow-lg shadow-[#15307c]"
-//                   >
-//                     <li className="text-[#15307c] hover:bg-[#15307c] hover:text-white rounded transition ease-in-out duration-500 focus:bg-[#15307c]">
-//                       <Link to="/service-detail/rpo">RPO</Link>
-//                     </li>
-//                     <li className="text-[#15307c] hover:bg-[#15307c] hover:text-white rounded-lg transition ease-in-out duration-500">
-//                       <Link to="/service-detail/bpo">BPO</Link>
-//                     </li>
-//                     <li className="text-[#15307c] hover:bg-[#15307c] hover:text-white rounded-lg transition ease-in-out duration-500">
-//                       <Link to="/service-detail/ito">ITO</Link>
-//                     </li>
-//                   </ul>
-//                 </div>
-//               </Link>
-//             </li>
-//             {/* Career */}
-//             <li>
-//               <Link to="/Career" className={linkClasses}>
-//                 Careers
-//               </Link>
-//             </li>
-//             {/* Contact */}
-//             <li>
-//               <Link to="/ContactUs" className={linkClasses}>
-//                 Contact Us
-//               </Link>
-//             </li>
-//           </ul>
-//         </div>
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
-
-"use client"
-
-import { useEffect, useState } from "react"
-import { Link, useLocation } from "react-router-dom"
-import { Menu, ChevronDown } from "lucide-react"
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, ChevronDown, Mail, Phone, MessageCircle } from "lucide-react";
 
 const Navbar = () => {
-  const [isNavbarOpen, setNavbarOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const location = useLocation()
+  const [isNavbarOpen, setNavbarOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const theme = "black";
+
+  const logo = theme !== "black" ? "logo-white.png" : "logo-black.png";
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
-        setIsScrolled(true)
+        setIsScrolled(true);
       } else {
-        setIsScrolled(false)
+        setIsScrolled(false);
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     if (isNavbarOpen) {
-      document.body.style.overflow = "hidden"
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto"
+      document.body.style.overflow = "auto";
     }
-  }, [isNavbarOpen])
+  }, [isNavbarOpen]);
 
   const toggleNavbar = () => {
-    setNavbarOpen((prevState) => !prevState)
-  }
+    setNavbarOpen((prevState) => !prevState);
+  };
 
   const isActive = (path) => {
-    return location.pathname === path
-  }
+    return location.pathname === path;
+  };
 
   return (
     <nav
-      className={`${isScrolled ? "bg-[#121624]/90 backdrop-blur-sm" : "bg-[#121624]"} fixed w-full z-30 transition-all duration-300`}
+      className={`${
+        isScrolled ? "bg-[#121624]/90 backdrop-blur-sm" : "bg-[#121624]"
+      } fixed w-full z-30 transition-all duration-300`}
     >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-4">
         {/* Logo */}
-        <Link to="/" className="text-white text-3xl font-bold">
-          Logo
+        <Link to="/" className="text-white font-bold">
+          <div className="relative w-40 h-20 overflow-hidden group">
+            <div className="absolute inset-0 flex items-center transition-transform duration-500 ease-in-out group-hover:translate-x-[100%]">
+              <img src={`images/${logo}`} alt="Logo" className="w-20 h-20" />
+            </div>
+            <div className="absolute inset-0 flex items-center transition-transform duration-500 ease-in-out translate-x-[100%] group-hover:translate-x-0">
+              <span className="text-xl font-bold text-white">
+                Elevex Global
+              </span>
+            </div>
+          </div>
         </Link>
 
         {/* Mobile menu button */}
@@ -208,7 +80,9 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/"
-                  className={`text-sm font-medium ${isActive("/") ? "text-[#4154f1]" : "text-gray-800"} hover:text-[#4154f1] transition-colors`}
+                  className={`text-sm font-medium ${
+                    isActive("/") ? "text-[#4154f1]" : "text-gray-800"
+                  } hover:text-[#4154f1] transition-colors`}
                 >
                   Home
                 </Link>
@@ -216,18 +90,32 @@ const Navbar = () => {
               <li className="group relative">
                 <Link
                   to="/Services"
-                  className={`text-sm font-medium ${isActive("/Services") ? "text-[#4154f1]" : "text-gray-800"} hover:text-[#4154f1] transition-colors flex items-center gap-0`}
+                  className={`text-sm font-medium ${
+                    isActive("/Services") ? "text-[#4154f1]" : "text-gray-800"
+                  } hover:text-[#4154f1] transition-colors flex items-center gap-0`}
                 >
-                  Services
+                  <div className="flex items-center justify-center gap-1">
+                    <p>Services</p>
+                    <ChevronDown className="h-5 w-5 pt-0.5" />
+                  </div>
                 </Link>
                 <div className="absolute left-0 top-full mt-0 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden group-hover:block">
-                  <Link to="/service-detail/rpo" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100">
+                  <Link
+                    to="/service-detail/rpo"
+                    className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                  >
                     RPO
                   </Link>
-                  <Link to="/service-detail/bpo" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100">
+                  <Link
+                    to="/service-detail/bpo"
+                    className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                  >
                     BPO
                   </Link>
-                  <Link to="/service-detail/ito" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100">
+                  <Link
+                    to="/service-detail/ito"
+                    className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                  >
                     ITO
                   </Link>
                 </div>
@@ -235,7 +123,9 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/Career"
-                  className={`text-sm font-medium ${isActive("/Career") ? "text-[#4154f1]" : "text-gray-800"} hover:text-[#4154f1] transition-colors`}
+                  className={`text-sm font-medium ${
+                    isActive("/Career") ? "text-[#4154f1]" : "text-gray-800"
+                  } hover:text-[#4154f1] transition-colors`}
                 >
                   Careers
                 </Link>
@@ -243,7 +133,9 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/AboutUs"
-                  className={`text-sm font-medium ${isActive("/AboutUs") ? "text-[#4154f1]" : "text-gray-800"} hover:text-[#4154f1] transition-colors`}
+                  className={`text-sm font-medium ${
+                    isActive("/AboutUs") ? "text-[#4154f1]" : "text-gray-800"
+                  } hover:text-[#4154f1] transition-colors`}
                 >
                   About Us
                 </Link>
@@ -253,15 +145,28 @@ const Navbar = () => {
         </div>
 
         {/* Contact Us Button */}
-        <Link
-          to="/ContactUs"
-          className="hidden md:block border border-white text-white hover:bg-white hover:text-[#121624] transition-colors px-5 py-2 rounded-full"
-        >
-          Contact Us
-        </Link>
-
+        <div className="flex items-center gap-4">
+          <Link
+            to="/ContactUs"
+            className="hidden md:block border border-white text-white hover:bg-white hover:text-[#121624] transition-colors px-5 py-2 rounded-full"
+          >
+            Contact Us
+          </Link>
+          <a href="mailto:info@tecpartner.net" target="_blank" rel="noopener noreferrer">
+            <Mail className="text-white cursor-pointer hover:text-red-400 transition-all duration-200 ease-in-out"/>
+          </a>
+          <a href="https://wa.me/923335535234" target="_blank" rel="noopener noreferrer">
+            <MessageCircle className="text-white cursor-pointer hover:text-green-500 transition-all duration-200 ease-in-out" />
+          </a>
+        </div>
         {/* Mobile Navigation */}
-        <div className={`${isNavbarOpen ? "fixed inset-0 bg-[#121624] pt-20 px-6 z-50" : "hidden"} md:hidden`}>
+        <div
+          className={`${
+            isNavbarOpen
+              ? "fixed inset-0 bg-[#121624] pt-20 px-6 z-50"
+              : "hidden"
+          } md:hidden`}
+        >
           <ul className="flex flex-col space-y-6">
             <li>
               <Link
@@ -277,14 +182,19 @@ const Navbar = () => {
                 <button
                   className="flex items-center justify-between w-full text-white text-lg font-medium hover:text-gray-300 transition-colors"
                   onClick={(e) => {
-                    e.preventDefault()
-                    document.getElementById("mobile-services-dropdown").classList.toggle("hidden")
+                    e.preventDefault();
+                    document
+                      .getElementById("mobile-services-dropdown")
+                      .classList.toggle("hidden");
                   }}
                 >
                   <span>Services</span>
                   <ChevronDown className="h-5 w-5" />
                 </button>
-                <div id="mobile-services-dropdown" className="hidden mt-2 pl-4 space-y-2">
+                <div
+                  id="mobile-services-dropdown"
+                  className="hidden mt-2 pl-4 space-y-2"
+                >
                   <Link
                     to="/service-detail/rpo"
                     className="block text-gray-300 hover:text-white transition-colors"
@@ -325,15 +235,6 @@ const Navbar = () => {
                 onClick={() => setNavbarOpen(false)}
               >
                 About Us
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/Career"
-                className="text-white text-lg font-medium hover:text-gray-300 transition-colors"
-                onClick={() => setNavbarOpen(false)}
-              >
-                Careers
               </Link>
             </li>
             <li>
@@ -404,8 +305,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
-
+export default Navbar;
