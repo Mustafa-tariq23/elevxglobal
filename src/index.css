@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.footer{
+  background: url('../public/images/footer-bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.workflow-step-card {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  will-change: opacity, transform;
+}
