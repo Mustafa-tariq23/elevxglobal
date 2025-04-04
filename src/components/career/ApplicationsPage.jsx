@@ -114,8 +114,8 @@ export default function ApplicationsPage() {
           <Link to="/admin" className="flex items-center">
             <div className="relative h-10 w-32">
               <div className="flex items-center">
-                <span className="text-2xl font-bold text-green-600">HR</span>
-                <span className="text-2xl font-bold text-gray-800">WAYS</span>
+                <span className="text-2xl font-bold text-green-600">Elevex</span>
+                <span className="text-2xl font-bold text-gray-800">Global</span>
               </div>
             </div>
           </Link>

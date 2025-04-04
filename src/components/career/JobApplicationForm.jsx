@@ -17,12 +17,15 @@ import { ArrowLeft } from "lucide-react"
 import { Link } from "react-router-dom"
 import Header from "../HeaderForPages"
 import Footer from "../Footer"
+// Update imports
+import { FormField } from "../ui/form-field"
 
 export default function JobApplicationForm({ job }) {
   const navigate = useNavigate()
   const { id } = useParams()
   const jobId = id || (job ? job.id : null)
 
+  // Remove agreeToTerms from initial state
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -34,7 +37,6 @@ export default function JobApplicationForm({ job }) {
     currentBenefits: "",
     expectedSalary: "",
     noticePeriod: "",
-    agreeToTerms: false,
     jobId: jobId,
   })
 
@@ -76,64 +78,69 @@ export default function JobApplicationForm({ job }) {
     }
   }
 
+  // First, update the validateForm function
   const validateForm = () => {
-    try {
-      // Create a validation object that matches the schema structure
-      const validationObj = {
-        ...formData,
-        applicationDate: new Date(),
-        status: "pending",
-      }
+    const newErrors = {}
 
-      applicationSchema.parse(validationObj)
-      return true
-    } catch (error) {
-      const formattedErrors = {}
-      error.errors.forEach((err) => {
-        formattedErrors[err.path[0]] = err.message
-      })
-      setErrors(formattedErrors)
-      return false
+    // Basic validation
+    if (!formData.fullName.trim()) newErrors.fullName = "Full name is required"
+    if (!formData.email.trim()) newErrors.email = "Email is required"
+    if (!formData.phone.trim()) newErrors.phone = "Phone number is required"
+    if (!formData.resume) newErrors.resume = "Resume is required"
+    if (!formData.portfolio.trim()) newErrors.portfolio = "Portfolio URL is required"
+    if (!formData.noticePeriod.trim()) newErrors.noticePeriod = "Notice period is required"
+  
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (formData.email && !emailRegex.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address"
     }
+  
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
   }
-
+  
+  // Then, update the handleSubmit function
   const handleSubmit = async (e) => {
     e.preventDefault()
     setSubmitError("")
-
+  
     if (!validateForm()) {
+      console.log("Form validation failed", errors)
       return
     }
-
+  
     setLoading(true)
-
+  
     try {
-      // Upload resume to Firebase Storage
-      const resumeRef = ref(storage, `resumes/${formData.fullName}-${Date.now()}`)
+      // Upload resume first
+      const resumeRef = ref(storage, `resumes/${formData.fullName}-${Date.now()}${formData.resume.name}`)
       await uploadBytes(resumeRef, formData.resume)
       const resumeUrl = await getDownloadURL(resumeRef)
-
-      // Add application to Firestore
-      await addDoc(collection(db, "applications"), {
+  
+      // Create application document
+      const applicationData = {
         fullName: formData.fullName,
         email: formData.email,
         phone: formData.phone,
-        resumeUrl: resumeUrl,
+        resumeUrl,
         portfolio: formData.portfolio,
-        reasonToSwitch: formData.reasonToSwitch,
-        currentSalary: formData.currentSalary,
-        currentBenefits: formData.currentBenefits,
-        expectedSalary: formData.expectedSalary,
+        reasonToSwitch: formData.reasonToSwitch || "",
+        currentSalary: formData.currentSalary || "",
+        currentBenefits: formData.currentBenefits || "",
+        expectedSalary: formData.expectedSalary || "",
         noticePeriod: formData.noticePeriod,
-        agreeToTerms: formData.agreeToTerms,
-        jobId: formData.jobId,
+        jobId,
         applicationDate: serverTimestamp(),
-        status: "pending",
-      })
-
+        status: "pending"
+      }
+  
+      const docRef = await addDoc(collection(db, "applications"), applicationData)
+      console.log("Application submitted with ID:", docRef.id)
+  
       setSubmitSuccess(true)
-
-      // Reset form after successful submission
+      
+      // Reset form
       setFormData({
         fullName: "",
         email: "",
@@ -145,13 +152,12 @@ export default function JobApplicationForm({ job }) {
         currentBenefits: "",
         expectedSalary: "",
         noticePeriod: "",
-        agreeToTerms: false,
-        jobId: jobId,
+        jobId,
       })
-
-      // Redirect back to job details after 2 seconds
+  
+      // Redirect after successful submission
       setTimeout(() => {
-        navigate(`/jobs/${jobId}`)
+        navigate("/Career")
       }, 2000)
     } catch (error) {
       console.error("Error submitting application:", error)
@@ -163,11 +169,12 @@ export default function JobApplicationForm({ job }) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <Header heading="About Elevex Global"
+        para="Elevex Global is dedicated to connecting talented professionals with the best opportunities in the tech industry. We work with leading tech companies to provide quality recruitment services and career advancement opportunities." />
 
       <main className="flex-1 bg-gray-50 py-12">
         <div className="container mx-auto px-4">
-          <Link to={`/jobs/${jobId}`} className="inline-flex items-center text-green-600 hover:text-green-700 mb-6">
+          <Link to={`/jobs/${jobId}`} className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-6">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to job details
           </Link>
@@ -194,186 +201,123 @@ export default function JobApplicationForm({ job }) {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="fullName" className={errors.fullName ? "text-red-500" : ""}>
-                    Full Name *
-                  </Label>
-                  <Input
-                    id="fullName"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    className={errors.fullName ? "border-red-500" : ""}
-                    disabled={loading}
-                  />
-                  {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName}</p>}
-                </div>
+                <FormField
+                  label="Full Name"
+                  name="fullName"
+                  placeholder={"John Doe"}
+                  value={formData.fullName}
+                  onChange={handleInputChange}
+                  error={errors.fullName}
+                  disabled={loading}
+                  required
+                />
 
-                <div className="space-y-2">
-                  <Label htmlFor="email" className={errors.email ? "text-red-500" : ""}>
-                    Email *
-                  </Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className={errors.email ? "border-red-500" : ""}
-                    disabled={loading}
-                  />
-                  {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-                </div>
+                <FormField
+                  label="Email"
+                  name="email"
+                  type="email"
+                  placeholder={"johndoe@gmail.com"}
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  error={errors.email}
+                  disabled={loading}
+                  required
+                />
 
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className={errors.phone ? "text-red-500" : ""}>
-                    Phone Number *
-                  </Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className={errors.phone ? "border-red-500" : ""}
-                    disabled={loading}
-                  />
-                  {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
-                </div>
+                <FormField
+                  label="Phone Number"
+                  name="phone"
+                  placeholder={"(123) 456-7890"}
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  error={errors.phone}
+                  disabled={loading}
+                  required
+                />
 
-                <div className="space-y-2">
-                  <Label htmlFor="resume" className={errors.resume ? "text-red-500" : ""}>
-                    Resume/CV *
-                  </Label>
-                  <Input
-                    id="resume"
-                    name="resume"
-                    type="file"
-                    onChange={handleFileChange}
-                    className={errors.resume ? "border-red-500" : ""}
-                    disabled={loading}
-                  />
-                  <p className="text-xs text-gray-500">PDF, DOC, or DOCX (Max 5MB)</p>
-                  {errors.resume && <p className="text-red-500 text-sm">{errors.resume}</p>}
-                </div>
+                <FormField
+                  label="Resume/CV"
+                  name="resume"
+                  type="file"
+                  onChange={handleFileChange}
+                  error={errors.resume}
+                  disabled={loading}
+                  required
+                />
 
-                <div className="space-y-2">
-                  <Label htmlFor="portfolio" className={errors.portfolio ? "text-red-500" : ""}>
-                    Github/Tech Portfolio URL *
-                  </Label>
-                  <Input
-                    id="portfolio"
-                    name="portfolio"
-                    value={formData.portfolio}
-                    onChange={handleInputChange}
-                    placeholder="https://github.com/yourusername"
-                    className={errors.portfolio ? "border-red-500" : ""}
-                    disabled={loading}
-                  />
-                  {errors.portfolio && <p className="text-red-500 text-sm">{errors.portfolio}</p>}
-                </div>
+                <FormField
+                  label="Github / LinkedIn / Tech Portfolio URL"
+                  name="portfolio"
+                  value={formData.portfolio}
+                  onChange={handleInputChange}
+                  error={errors.portfolio}
+                  placeholder="https://LinkedIn.com/yourusername"
+                  disabled={loading}
+                  required
+                />
 
-                <div className="space-y-2">
-                  <Label htmlFor="reasonToSwitch">Reason to Switch</Label>
-                  <Textarea
-                    id="reasonToSwitch"
-                    name="reasonToSwitch"
-                    value={formData.reasonToSwitch}
-                    onChange={handleInputChange}
-                    rows={3}
-                    disabled={loading}
-                  />
-                </div>
+                <FormField
+                  label="Reason to Switch"
+                  name="reasonToSwitch"
+                  type="textarea"
+                  value={formData.reasonToSwitch}
+                  onChange={handleInputChange}
+                  placeholder={"e.g., Looking for a new challenge, Better pay, etc."}
+                  disabled={loading}
+                  rows={3}
+                />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="currentSalary">Current Salary</Label>
-                    <Input
-                      id="currentSalary"
-                      name="currentSalary"
-                      value={formData.currentSalary}
-                      onChange={handleInputChange}
-                      placeholder="e.g., $50,000/year"
-                      disabled={loading}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="expectedSalary">Expected Salary</Label>
-                    <Input
-                      id="expectedSalary"
-                      name="expectedSalary"
-                      value={formData.expectedSalary}
-                      onChange={handleInputChange}
-                      placeholder="e.g., $60,000/year"
-                      disabled={loading}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="currentBenefits">Current Benefits</Label>
-                  <Textarea
-                    id="currentBenefits"
-                    name="currentBenefits"
-                    value={formData.currentBenefits}
+                  <FormField
+                    label="Current Salary"
+                    name="currentSalary"
+                    value={formData.currentSalary}
                     onChange={handleInputChange}
-                    rows={2}
-                    placeholder="e.g., Health insurance, 401k, etc."
+                    placeholder="e.g., 50k/month"
                     disabled={loading}
                   />
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="noticePeriod" className={errors.noticePeriod ? "text-red-500" : ""}>
-                    When can you Join? (Notice Period) *
-                  </Label>
-                  <Input
-                    id="noticePeriod"
-                    name="noticePeriod"
-                    value={formData.noticePeriod}
+                  <FormField
+                    label="Expected Salary"
+                    name="expectedSalary"
+                    value={formData.expectedSalary}
                     onChange={handleInputChange}
-                    placeholder="e.g., 2 weeks, Immediately, etc."
-                    className={errors.noticePeriod ? "border-red-500" : ""}
+                    placeholder="e.g., 100k/month"
                     disabled={loading}
                   />
-                  {errors.noticePeriod && <p className="text-red-500 text-sm">{errors.noticePeriod}</p>}
                 </div>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="agreeToTerms"
-                    name="agreeToTerms"
-                    checked={formData.agreeToTerms}
-                    onCheckedChange={(checked) => {
-                      setFormData({
-                        ...formData,
-                        agreeToTerms: checked,
-                      })
-                      if (errors.agreeToTerms) {
-                        setErrors({
-                          ...errors,
-                          agreeToTerms: "",
-                        })
-                      }
-                    }}
-                    className={errors.agreeToTerms ? "border-red-500" : ""}
-                    disabled={loading}
-                  />
-                  <Label htmlFor="agreeToTerms" className={`text-sm ${errors.agreeToTerms ? "text-red-500" : ""}`}>
-                    I agree to the Terms and Conditions & Privacy Policy *
-                  </Label>
-                </div>
-                {errors.agreeToTerms && <p className="text-red-500 text-sm">{errors.agreeToTerms}</p>}
+                <FormField
+                  label="Current Benefits"
+                  name="currentBenefits"
+                  type="textarea"
+                  value={formData.currentBenefits}
+                  onChange={handleInputChange}
+                  placeholder="e.g., Health insurance, 401k, etc."
+                  disabled={loading}
+                  rows={2}
+                />
 
-                <Button type="submit" className="w-full bg-green-600 hover:bg-green-700" disabled={loading}>
-                  {loading ? "Submitting Application..." : "Submit Application"}
-                </Button>
-              </form>
-            </CardContent>
+                <FormField
+                  label="When can you Join? (Notice Period)"
+                  name="noticePeriod"
+                  value={formData.noticePeriod}
+                  onChange={handleInputChange}
+                  error={errors.noticePeriod}
+                  placeholder="e.g., 2 weeks, Immediately, etc."
+                  disabled={loading}
+                  required
+                />
+                
+                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white" disabled={loading}>
+                    {loading ? "Submitting Application..." : "Submit Application"}
+                  </Button>
+                </form>
+              </CardContent>
           </Card>
         </div>
       </main>
-
+      
       <Footer />
     </div>
   )

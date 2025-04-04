@@ -183,7 +183,6 @@
 //               ) : (
 //                 <div className="col-span-2 text-center py-16 bg-white rounded-lg shadow-md">
 //                   <p className="text-lg text-gray-700">No job openings match your search criteria.</p>
-//                   <p className="mt-2 text-gray-500">Try adjusting your filters or search term.</p>
 //                 </div>
 //               )}
 //             </div>
@@ -295,7 +294,7 @@ import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card"
 import { Search, ChevronLeft, ChevronRight } from "lucide-react"
-import Header from "../../components/HeaderForPages"
+import HeaderForCareer from "./careerHeader"
 import Footer from "../../components/Footer"
 
 export default function CareersPage() {
@@ -365,55 +364,20 @@ export default function CareersPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <HeaderForCareer heading="Careers" para="We are seeking exceptional talent worldwide." />
 
       <main className="flex-1">
-        <section className="bg-green-500 text-white py-20 md:py-32">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-3xl md:text-5xl font-bold mb-4">Recruitment Partner to 300+ Tech Companies</h1>
-            <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
-              We're looking for Great People from around the world to match to our existing clientele
-            </p>
-            <Button className="bg-white text-green-600 hover:bg-gray-100 hover:text-green-700 px-8 py-6 text-lg h-auto">
-              <a href="#job-openings">View Openings</a>
-            </Button>
-          </div>
-        </section>
-
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <p className="text-lg mb-6">
-                Fast placements. Quality onboarding. Tenacious testing. What's HR Ways, that's what you wanted to ask.
-                The only Tenacious testing. What's HR Ways, that's what you wanted to ask. The only dedicated Tech and
-                Digital recruitment agency having worldwide first-class HR solutions. Our Recruiters work with the best
-                software and digital agencies in the region. We equip our clients with priceless industry insight and
-                put everything we've got into training and mentoring our candidates.
-              </p>
-              <p className="text-lg mb-6">
-                We're here to match talented people with the job opportunities and employers they're looking for. On a
-                monthly basis, we engage over 5000+ people for opportunities that create disruption in the market. Join
-                our WhatsApp Channel{" "}
-                <a href="https://shorturl.at/983az" className="text-blue-600 hover:underline">
-                  https://shorturl.at/983az
-                </a>{" "}
-                to stay updated.
-              </p>
-            </div>
-          </div>
-        </section>
-
         <section id="job-openings" className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Openings</h2>
+            <h2 className="text-3xl md:text-4xl text-[#121624] font-bold text-center mb-12">Our Openings</h2>
 
             <div className="max-w-5xl mx-auto mb-8">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white bg-[#121624]" />
                   <Input
                     type="text"
-                    placeholder="Search job titles"
+                    placeholder="Search by job titles"
                     className="pl-10"
                     value={searchTerm}
                     onChange={(e) => {
@@ -423,7 +387,7 @@ export default function CareersPage() {
                   />
                 </div>
                 <select
-                  className="p-2 border rounded-md"
+                  className="p-2 bg-[#121624] border rounded-md"
                   value={selectedDepartment}
                   onChange={(e) => {
                     setSelectedDepartment(e.target.value)
@@ -437,7 +401,7 @@ export default function CareersPage() {
                   ))}
                 </select>
                 <select
-                  className="p-2 border rounded-md"
+                  className="p-2 bg-[#121624] border rounded-md"
                   value={selectedJobType}
                   onChange={(e) => {
                     setSelectedJobType(e.target.value)
@@ -453,42 +417,41 @@ export default function CareersPage() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {/* Replace the grid with flex column layout */}
+            <div className="flex flex-col space-y-4 max-w-5xl mx-auto">
               {loading ? (
-                <div className="col-span-2 text-center py-8">
+                <div className="text-center py-8">
                   <p className="text-lg text-gray-500">Loading job openings...</p>
                 </div>
               ) : currentJobs.length > 0 ? (
                 currentJobs.map((job) => (
-                  <Card key={job.id} className="hover:shadow-md transition-shadow">
-                    <CardHeader>
-                      <CardTitle>{job.title}</CardTitle>
-                      <CardDescription>{job.department}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <span>{job.location}</span>
-                        <span>•</span>
-                        <span className="capitalize">{job.type}</span>
+                  <Card key={job.id} className="hover:shadow-md bg-[#121624] transition-shadow w-full">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between p-6">
+                      <div className="space-y-2">
+                        <CardTitle className="text-xl">{job.title}</CardTitle>
+                        <CardDescription className="text-sm">{job.department}</CardDescription>
+                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                          <span>{job.location}</span>
+                          <span>•</span>
+                          <span className="capitalize">{job.type}</span>
+                        </div>
                       </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Link to={`/jobs/${job.id}`}>
-                        <Button variant="outline" className="w-full">
-                          View Details
+                      <Link to={`/jobs/${job.id}`} className="mt-4 md:mt-0">
+                        <Button variant="outline">
+                          Apply Now
                         </Button>
                       </Link>
-                    </CardFooter>
+                    </div>
                   </Card>
                 ))
               ) : (
-                <div className="col-span-2 text-center py-8">
+                <div className="text-center py-8">
                   <p className="text-lg text-gray-500">No job openings match your search criteria.</p>
                 </div>
               )}
             </div>
 
-            {/* Pagination */}
+            {/* Pagination remains unchanged */}
             {filteredJobs.length > jobsPerPage && (
               <div className="flex justify-center mt-8">
                 <div className="flex items-center space-x-2">

@@ -8,12 +8,12 @@ import NotFound from "./components/NotFound";
 import IndivisualService from "./components/IndivisualSecvice";
 import Form from "./components/Form";
 import JobApplicationPage from "./components/career/JobApplicationPage";
+import { useEffect, useState } from 'react';
 // import ApplicationsPage from "./components/career/ApplicationsPage";
 import "./index.css";
 import "aos/dist/aos.css";
 
 import { Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
 import Aos from "aos";
 import JobApplicationForm from "./components/CareerSection/JobApplicationForm";
 
@@ -22,8 +22,32 @@ function App() {
     Aos.init({ once: true, duration: 1000 });
     Aos.refresh();
   }, []);
+
+  const [darkMode, setDarkMode] = useState(false);
+  useEffect(() => {
+    // Check system preference
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setDarkMode(true);
+    }
+
+    // Add listener for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e) => setDarkMode(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
   return (
-    <div className="bg-white">
+    <div className="bg-white min-h-screen bg-background text-foreground">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/AboutUs" element={<About />} />
