@@ -13,7 +13,7 @@ const NotFound = () => {
       <div className="flex items-center justify-center h-screen bg-gray-100 p-12">
         <div className="w-2/4 flex items-center justify-center">
           <img
-            src="images/404.svg"
+            src="/images/404.svg"
             alt="404 Not Found"
             className="w-3/4 mb-8 h-3/4 rounded-3xl"
             data-aos="fade-up"

@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 
 const Card = ({ svg, heading, para, serviceType }) => {
   return (
-    <div className="group flex flex-col justify-between max-w-sm p-6 shadow-2xl shadow-indigo-300 bg-gray-100 border hover:border-[3px] transition duration-1000 hover:zoom hover:border-indigo-500 border-gray-200 rounded-lg min-h-[380px]" draggable="false">
+    <div className="group flex flex-col justify-between max-w-sm p-6 shadow-2xl shadow-indigo-300 bg-gray-100 border hover:border-[3px] transition duration-1000 hover:zoom hover:border-[#15307c] border-gray-200 rounded-lg min-h-[380px]" draggable="false">
       <div
         className="text-[#15307c] pb-4"
         dangerouslySetInnerHTML={{ __html: svg }}
       />
       <section className="text-section">
         <div className="mt-1">
-          <h5 className="mb-2 text-2xl font-medium group-hover:text-indigo-600 transition duration-300">
+          <h5 className="mb-2 text-2xl font-medium text-[#1a1e2e] group-hover:text-[#11131e] transition duration-300">
             {heading}
           </h5>
         </div>

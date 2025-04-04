@@ -6,6 +6,7 @@ import Testimonial from "./Testimonial";
 import ScrollToTop from "./ScrollToTop";
 // import { Globe, PenTool, Settings, BarChart3, Rocket } from "lucide-react";
 import WorkflowSectionWithAnimation from "./WorkflowSectionWithAnimation";
+import TeamSection from "./team-section";
 // import HeaderTopBar from "./HeaderTopBar";
 
 // Define SVG icons in an array for better management
@@ -18,18 +19,18 @@ const svgIcons = [
     serviceType: "rpo",
   },
   {
-    svg: '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-2"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3v0a2 2 0 0 1 2 2v0c0 1.1.9 2 2 2v0a2 2 0 0 0 2-2v0c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2v0a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>',
-    heading: "Business Process Outsourcing",
-    para: "We provide cost-effective and efficient back-office support.",
-    animation: "fade-up",
-    serviceType: "bpo",
-  },
-  {
     svg: '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
     heading: "Information Technology Outsourcing",
     para: "We provide IT-based solutions for businesses ranging from startups to enterprise-level.",
     animation: "fade-left",
     serviceType: "ito",
+  },
+  {
+    svg: '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-2"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3v0a2 2 0 0 1 2 2v0c0 1.1.9 2 2 2v0a2 2 0 0 0 2-2v0c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2v0a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>',
+    heading: "Business Process Outsourcing",
+    para: "We provide cost-effective and efficient back-office support.",
+    animation: "fade-up",
+    serviceType: "bpo",
   },
 ];
 
@@ -71,16 +72,22 @@ const svgIcons = [
 //   }
 // ];
 
-
 function Home() {
   return (
     <div>
       {/* <HeaderTopBar/> */}
       <Header />
       <section className="services-grid flex flex-col items-center justify-center w-full bg-gray-100">
-      <div className="flex flex-col items-center justify-center pt-12 gap-2 ">
-        <h1 className="text-4xl text-[#1a1e2e] font-bold">Our Services</h1>
-        <p className="text-sm max-w-[700px] text-center">Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development to fill empty spaces in a layout that do not yet have content.</p>
+        <div className="flex flex-col items-center justify-center pt-12 gap-2 ">
+          <h1 className="text-4xl text-[#1a1e2e] font-bold">Our Services</h1>
+          <p className="text-sm max-w-[700px] text-[#1a1e2e] text-center">
+            Unlock efficiency and scalability with our expert outsourcing
+            services. We specialize in int the following services to help
+            businesses streamline operations, reduce costs, and enhance
+            productivity. Whether you need end-to-end IT support, seamless
+            business processes, or top- tier talent acquisition, our solutions
+            are tailored to drive success.
+          </p>
         </div>
         <div
           data-aos="fade-up"
@@ -98,7 +105,7 @@ function Home() {
           ))}
         </div>
       </section>
-      <WorkflowSectionWithAnimation/>
+      <WorkflowSectionWithAnimation />
       <Testimonial />
       <RenderBar />
       <Footer />

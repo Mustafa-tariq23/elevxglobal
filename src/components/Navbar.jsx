@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, ChevronDown, Mail, Phone, MessageCircle } from "lucide-react";
+import { ChevronDown, Mail, MessageCircle } from "lucide-react";
 
 const Navbar = () => {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
@@ -10,7 +10,7 @@ const Navbar = () => {
   const location = useLocation();
   const theme = "black";
 
-  const logo = theme !== "black" ? "logo-white.png" : "logo-black.png";
+  const logo = theme === "black" ? "logo-black.png" : "logo-white.png";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,36 +47,25 @@ const Navbar = () => {
         isScrolled ? "bg-[#121624]/90 backdrop-blur-sm" : "bg-[#121624]"
       } fixed w-full z-30 transition-all duration-300`}
     >
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-4">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-2 md:py-4">
         {/* Logo */}
         <Link to="/" className="text-white font-bold">
-          <div className="relative w-40 h-20 overflow-hidden group">
+          <div className="relative w-32 md:w-40 h-16 md:h-20 overflow-hidden group">
             <div className="absolute inset-0 flex items-center transition-transform duration-500 ease-in-out group-hover:translate-x-[100%]">
-              <img src={`images/${logo}`} alt="Logo" className="w-20 h-20" />
+              <img src={`/images/${logo}`} alt="Logo" className="w-16 h-16 md:w-20 md:h-20" />
             </div>
             <div className="absolute inset-0 flex items-center transition-transform duration-500 ease-in-out translate-x-[100%] group-hover:translate-x-0">
-              <span className="text-xl font-bold text-white">
+              <span className="text-lg md:text-xl font-bold text-white">
                 Elevex Global
               </span>
             </div>
           </div>
         </Link>
 
-        {/* Mobile menu button */}
-        <button
-          onClick={toggleNavbar}
-          type="button"
-          aria-label="Toggle navigation menu"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden text-white focus:outline-none focus:ring-2 focus:ring-gray-600"
-        >
-          <span className="sr-only">Open main menu</span>
-          <Menu className="w-6 h-6" />
-        </button>
-
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center">
-          <div className="bg-white rounded-full px-4 py-2">
-            <ul className="flex space-x-8 items-center">
+          <div className="bg-white rounded-full px-3 md:px-4 py-2">
+            <ul className="flex space-x-4 md:space-x-8 items-center">
               <li>
                 <Link
                   to="/"
@@ -107,16 +96,16 @@ const Navbar = () => {
                     RPO
                   </Link>
                   <Link
-                    to="/service-detail/bpo"
-                    className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
-                  >
-                    BPO
-                  </Link>
-                  <Link
                     to="/service-detail/ito"
                     className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
                   >
                     ITO
+                  </Link>
+                  <Link
+                    to="/service-detail/bpo"
+                    className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                  >
+                    BPO
                   </Link>
                 </div>
               </li>
@@ -144,30 +133,31 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Contact Us Button */}
-        <div className="flex items-center gap-4">
+        {/* Contact Us Button and Icons */}
+        <div className="flex items-center gap-2 md:gap-4">
           <Link
             to="/ContactUs"
-            className="hidden md:block border border-white text-white hover:bg-white hover:text-[#121624] transition-colors px-5 py-2 rounded-full"
+            className="hidden md:block border border-white text-white hover:bg-white hover:text-[#121624] transition-colors px-3 md:px-5 py-1.5 md:py-2 rounded-full text-sm md:text-base"
           >
             Contact Us
           </Link>
           <a href="mailto:info@tecpartner.net" target="_blank" rel="noopener noreferrer">
-            <Mail className="text-white cursor-pointer hover:text-red-400 transition-all duration-200 ease-in-out"/>
+            <Mail className="w-5 h-5 md:w-6 md:h-6 text-white cursor-pointer hover:text-red-400 transition-all duration-200 ease-in-out"/>
           </a>
           <a href="https://wa.me/923335535234" target="_blank" rel="noopener noreferrer">
-            <MessageCircle className="text-white cursor-pointer hover:text-green-500 transition-all duration-200 ease-in-out" />
+            <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-white cursor-pointer hover:text-green-500 transition-all duration-200 ease-in-out" />
           </a>
         </div>
+
         {/* Mobile Navigation */}
         <div
           className={`${
             isNavbarOpen
-              ? "fixed inset-0 bg-[#121624] pt-20 px-6 z-50"
+              ? "fixed inset-0 bg-[#121624] pt-16 md:pt-20 px-4 md:px-6 z-50 overflow-y-auto"
               : "hidden"
           } md:hidden`}
         >
-          <ul className="flex flex-col space-y-6">
+          <ul className="flex flex-col space-y-4 md:space-y-6">
             <li>
               <Link
                 to="/"
@@ -203,18 +193,18 @@ const Navbar = () => {
                     RPO
                   </Link>
                   <Link
-                    to="/service-detail/bpo"
-                    className="block text-gray-300 hover:text-white transition-colors"
-                    onClick={() => setNavbarOpen(false)}
-                  >
-                    BPO
-                  </Link>
-                  <Link
                     to="/service-detail/ito"
                     className="block text-gray-300 hover:text-white transition-colors"
                     onClick={() => setNavbarOpen(false)}
                   >
                     ITO
+                  </Link>
+                  <Link
+                    to="/service-detail/bpo"
+                    className="block text-gray-300 hover:text-white transition-colors"
+                    onClick={() => setNavbarOpen(false)}
+                  >
+                    BPO
                   </Link>
                 </div>
               </div>

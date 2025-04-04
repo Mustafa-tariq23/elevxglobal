@@ -132,7 +132,7 @@ const Form = () => {
           <div className="w-full lg:w-1/3 flex justify-center">
             <div className="relative w-60 h-80 overflow-hidden group">
               <div className="absolute inset-0 flex flex-col items-center">
-                <img src={`images/${logo}`} alt="Logo" className="w-60 h-60" />
+                <img src={`/images/${logo}`} alt="Logo" className="w-60 h-60" />
                 <h1 className="text-3xl text-[#0f1424] font-bold">Elevex Global</h1>
               </div>
             </div>

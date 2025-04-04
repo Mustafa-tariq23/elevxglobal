@@ -172,7 +172,7 @@ const Footer = () => {
             <Link to="/">
             <div className="relative w-40 h-20 overflow-hidden group">
             <div className="absolute inset-0 flex items-center transition-transform duration-500 ease-in-out group-hover:translate-x-[100%]">
-              <img src={`images/${logo}`} alt="Logo" className="w-20 h-20" />
+              <img src={`/images/${logo}`} alt="Logo" className="w-20 h-20" />
             </div>
             <div className="absolute inset-0 flex items-center transition-transform duration-500 ease-in-out translate-x-[100%] group-hover:translate-x-0">
               <span className="text-xl font-bold text-white">

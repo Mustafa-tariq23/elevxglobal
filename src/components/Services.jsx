@@ -92,19 +92,19 @@ const Services = () => {
       {serviceData.map((service, index) => (
         <div
           key={index}
-          className={`flex items-center justify-between gap-4 ${
+          className={`flex flex-col md:flex-row items-center justify-between gap-8 ${
             service.reverse ? "bg-gray-100" : "bg-white"
-          } 2xl:p-24 xl:p-24 md:p-24 lg:p-24 sm:p-24 p-4 flex-nowrap`}
+          } p-4 md:p-12 lg:p-24`}
         >
           {!service.reverse && (
             <img
               data-aos={service.animation}
               src={service.imgSrc}
               alt={service.imgAlt}
-              className="w-2/5 h-auto rounded-3xl"
+              className="w-full md:w-2/5 h-auto rounded-3xl mb-8 md:mb-0"
             />
           )}
-          <section className="flex-1 h-full flex flex-col gap-6">
+          <section className="flex-1 h-full flex flex-col gap-4 md:gap-6">
             <ServicesDetails
               h3={service.title}
               itemsHeading={service.itemsHeading}
@@ -116,7 +116,7 @@ const Services = () => {
               data-aos={service.animation}
               src={service.imgSrc}
               alt={service.imgAlt}
-              className="w-2/5 h-auto rounded-3xl"
+              className="w-full md:w-2/5 h-auto rounded-3xl mt-8 md:mt-0"
             />
           )}
         </div>

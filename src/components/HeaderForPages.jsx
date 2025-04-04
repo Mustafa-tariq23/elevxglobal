@@ -45,13 +45,13 @@ const HeaderForPages = (props) => {
       <div className="bg-[#121624] h-[30rem] flex flex-col justify-center items-center gap-4 pt-20">
         <h1
           data-aos="fade-up"
-          className="text-4xl sm:m-0 sm:p-0 sm:text-4xl xs:text-3xl px-8 font-bold flex flex-wrap text-white"
+          className="text-4xl sm:m-0 pt-12 sm:p-0 sm:text-4xl xs:text-3xl px-8 font-bold flex flex-wrap text-white"
         >
           {heading}
         </h1>
         <p
           data-aos="fade-up"
-          className={`w-[50%] sm:w-[70%] xs:w-[90%] hidden sm:block text-center p-4 text-gray-200 text-lg sm:text-base xs:text-sm ${para ? "": "hidden"}`}
+          className={`w-[50%] sm:w-[70%] xs:w-[90%] text-center p-4 text-gray-200 text-sm sm:text-base xs:text-sm overflow-scroll ${para ? "": "hidden"}`}
         >
           {para}
         </p>

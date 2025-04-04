@@ -16,6 +16,7 @@ import "aos/dist/aos.css";
 import { Routes, Route } from "react-router-dom";
 import Aos from "aos";
 import JobApplicationForm from "./components/CareerSection/JobApplicationForm";
+import TeamMemberProfile from "./components/TeamMemberProfile"
 
 function App() {
   useEffect(() => {
@@ -66,6 +67,7 @@ function App() {
           element={<JobApplicationForm />}
         />
         <Route path="/*" element={<NotFound />} />
+        <Route path="/team/:id" element={<TeamMemberProfile />} />
       </Routes>
     </div>
   );

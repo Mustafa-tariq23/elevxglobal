@@ -1,8 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { teamMembersArray } from "../data/teamData"
 
+// Remove the global hover state since we'll handle hover per card
 export default function TeamSection() {
+  const navigate = useNavigate()
   const stats = [
     { value: 10, label: "Years of Experience", suffix: "+" },
     { value: 50, label: "Project Completed", suffix: "+" },
@@ -11,27 +15,11 @@ export default function TeamSection() {
     { value: 6, label: "Team Members", suffix: "" },
   ]
 
-  const teamMembers = [
-    {
-      id: 1,
-      name: "Noah",
-      role: "Web Developer",
-      image: "/placeholder.svg?height=400&width=400",
-    },
-    {
-      id: 2,
-      name: "Emma",
-      role: "UI/UX Designer",
-      image: "/placeholder.svg?height=400&width=400",
-    },
-    {
-      id: 3,
-      name: "Liam",
-      role: "Project Manager",
-      image: "/placeholder.svg?height=400&width=400",
-    },
-  ]
+  const handleCardClick = (memberId) => {
+    navigate(`/team/${memberId}`)
+  }
 
+  // Remove the teamMembers array and use teamMembersArray instead
   return (
     <section className="container mx-auto px-4 py-16">
       {/* Stats Bar */}
@@ -61,23 +49,37 @@ export default function TeamSection() {
             <path d="M12 5v14" />
           </svg>
         </div>
-        <h2 className="mb-6 text-5xl font-bold">Our Team</h2>
+        <h2 className="mb-6 text-5xl font-bold text-[#23304d]">Our Team</h2>
         <p className="max-w-3xl text-center text-gray-600">
-          Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development to
-          fill empty spaces in a layout that do not yet have content.
+        At Elevex Global, our team is the backbone of our success. With a diverse group of skilled professionals, we bring innovation, expertise, and dedication to every project we undertake. Our talented team members specialize in software development, digital marketing, UI/UX design, ensuring high-quality solutions tailored to our clients' needs.
         </p>
       </div>
 
       {/* Team Members */}
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {teamMembers.map((member) => (
-          <div key={member.id} className="relative overflow-hidden rounded-lg bg-[#111827] pb-16">
+        {teamMembersArray.map((member) => (
+          <div 
+            key={member.id}
+            className="relative overflow-hidden rounded-lg bg-[#111827]"
+          >
             <div className="aspect-square w-full">
-              <img src={member.image || "/placeholder.svg"} alt={member.name} className="h-full w-full object-cover" />
-            </div>
-            <div className="absolute bottom-0 w-full bg-[#7b86e6]/80 p-4 text-center text-white backdrop-blur-sm">
-              <h3 className="text-2xl font-bold">{member.name}</h3>
-              <p>{member.role}</p>
+              <img 
+                src={member.image || "/placeholder.svg"} 
+                alt={member.name} 
+                className="h-full w-full object-cover" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent">
+                <div className="absolute bottom-0 w-full p-4 text-center text-white">
+                  <h3 className="text-2xl font-bold">{member.name}</h3>
+                  <p className="mb-4">{member.role}</p>
+                  <button 
+                    onClick={() => handleCardClick(member.id)}
+                    className="rounded-md bg-[#7b86e6] px-4 py-2 text-sm font-semibold text-white hover:bg-[#6470cc] transition-colors"
+                  >
+                    View Profile
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         ))}
