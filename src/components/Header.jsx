@@ -10,8 +10,9 @@ const Header = () => {
         <div className="container mx-auto px-4 pt-24 pb-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div className="space-y-8 z-10">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
-                Your Partner in Global<br />Growth.
+              <h1 className="text-3xl md:text-3xl lg:text-4xl font-bold leading-tight text-white">
+                {/* Your Partner in Global<br />Growth. */}
+                Expert IT Services &amp; Consultancy. <br /> Scalable Solutions for Your Business Growth.
               </h1>
 
               <div className="flex space-x-3 pt-4">
