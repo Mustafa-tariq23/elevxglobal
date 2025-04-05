@@ -53,7 +53,8 @@ const Header = () => {
               <div className="absolute -top-16 -right-8 w-24 h-24 rounded-full border-2 border-gray-700 opacity-70"></div>
               <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-03-27%20at%208.55.13%20PM-mXw6WACb5ek9tvf0Lfv62Gz8uHRx3n.png"
+                  // src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-03-27%20at%208.55.13%20PM-mXw6WACb5ek9tvf0Lfv62Gz8uHRx3n.png"
+                  src="/images/header-image.png"
                   alt="Person working on laptop"
                   className="w-full object-cover"
                 />
